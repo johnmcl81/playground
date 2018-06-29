@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Level 1</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @level1s.each do |level1| %>
+      <tr>
+        <td>id: <%= level1.id %></td>
+        <td>stage: <%= level1.stage %></td>
+        <td>result: <%= level1.result %></td>
+<!--        <td><%#= link_to 'Show', level1 %></td>-->
+<!--        <td><%#= link_to 'Edit', edit_level1_path(level1) %></td>-->
+<!--        <td><%#= link_to 'Destroy', level1, method: :delete, data: { confirm: 'Are you sure?' } %></td>-->
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%#= link_to 'New Level1', new_level1_path %>
