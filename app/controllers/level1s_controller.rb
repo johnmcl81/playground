@@ -5,20 +5,13 @@ class Level1sController < ApplicationController
   def index
 
     level1_1 = Level1.find_or_create_by(stage: 1)
-
     level1_1.input = level1_1.parse_input("level_1_input.txt")
-    level1_1.stage = 1
     level1_1.result = level1_1.calc_total(1)
-
     level1_1.save
 
     level_2 = Level1.find_or_create_by(stage: 2)
-
     level_2.input = level_2.parse_input("level_1_input.txt")
-    level_2.stage = 2
     level_2.result = level1_1.calc_total
-
-
     level_2.save
 
     @level1s = Level1.all
