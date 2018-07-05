@@ -4,12 +4,16 @@ class Level1sController < ApplicationController
   # GET /level1s
   def index
 
-    level1_1 = Level1.find_or_create_by(stage: 1)
-    level1_1.input = level1_1.parse_input("level_1_input.txt")
-    level1_1.result = level1_1.calc_total(1)
-    level1_1.save
+    level1_1 = Result.find_or_create_by(stage: 1)
+    level1_1.update_attributes(
+        input: level1_1.parse_input("level_1_input.txt"),
+        result: Result.level_1(InputInteger.where(level: :one).all.map(&:value))
+    )
+    # TODO: Seed input data as InputInteger class
+    # TODO: calc_total in new Class ResultCalculator
+    # TODO: Save each integer as a record in a seperate model
 
-    level_2 = Level1.find_or_create_by(stage: 2)
+    level_2 = Result.find_or_create_by(stage: 2)
     level_2.input = level_2.parse_input("level_1_input.txt")
     level_2.result = level1_1.calc_total
     level_2.save
