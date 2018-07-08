@@ -10,11 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_29_171842) do
+ActiveRecord::Schema.define(version: 2018_07_08_094555) do
 
-  create_table "level1s", force: :cascade do |t|
-    t.string "stage"
-    t.string "input"
+  create_table "inputs", force: :cascade do |t|
+    t.integer "input"
+    t.integer "order"
+    t.integer "level"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "results", force: :cascade do |t|
+    t.integer "level"
+    t.integer "stage"
     t.integer "result"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
