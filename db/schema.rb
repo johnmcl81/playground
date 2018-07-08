@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 2018_07_08_094555) do
   create_table "inputs", force: :cascade do |t|
     t.integer "input"
     t.integer "order"
+    t.integer "line"
     t.integer "level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
