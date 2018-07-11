@@ -1,3 +1,5 @@
 class Input < ApplicationRecord
-  attr_reader :input, :order, :level
+  validates :input, presence: true
+  # TODO: VALIDATE
+
 end

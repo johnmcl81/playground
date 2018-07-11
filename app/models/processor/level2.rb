@@ -17,8 +17,10 @@ module Processor
 
     def checksum_abs_divides
       sum = 0
+      # TODO: make use of database fields like order to do this better
       @int_array.each do |row|
-        row.sort!.reverse!
+        row.sort!
+        row.reverse!
         row.each_with_index do |int, index|
           (index..row.size - 2).each do |i|
             division = int.to_f / row[i + 1]
