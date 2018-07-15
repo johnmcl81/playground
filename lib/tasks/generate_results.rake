@@ -3,18 +3,18 @@ namespace :generate do
   task results: :environment do
     Result.where(level: 1, stage: 1)
           .first_or_create
-          .update(result: Processor::Calculate.new.level1(1))
+          .update(result: Processor::Level.new(1, 1).result)
 
     Result.where(level: 1, stage: 2)
           .first_or_create
-          .update(result: Processor::Calculate.new.level1)
+          .update(result: Processor::Level.new(1, 2).result)
 
     Result.where(level: 2, stage: 1)
           .first_or_create
-          .update(result: Processor::Calculate.new.level2(1))
+          .update(result: Processor::Level.new(2, 1).result)
 
     Result.where(level: 2, stage: 2)
           .first_or_create
-          .update(result: Processor::Calculate.new.level2(2))
+          .update(result: Processor::Level.new(2, 2).result)
   end
 end

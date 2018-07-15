@@ -1,5 +1,6 @@
 class Input < ApplicationRecord
   validates :input, presence: true
-  # TODO: VALIDATE
-
+  validates :order, presence: true
+  validates :line, presence: true
+  validates :level, presence: true
 end
