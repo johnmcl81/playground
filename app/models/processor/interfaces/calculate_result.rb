@@ -11,10 +11,7 @@ module Processor
       end
 
       def result
-        case level
-        when 1 then Level1::Result.new(input, stage).calculate
-        when 2 then Level2::Result.new(input, stage).calculate
-        end
+        result.calculate
       end
 
       private
