@@ -9,13 +9,13 @@ class Input < ApplicationRecord
   end
 end
 
-class InputLevel1 < Input
+class Level1 < Input
   def load
     Processor::Interfaces::Level1::Input.load
   end
 end
 
-class InputLevel2 < Input
+class Level2 < Input
   def load
     Processor::Interfaces::Level2::Input.load
   end

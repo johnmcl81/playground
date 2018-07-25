@@ -10,26 +10,29 @@ class Result < ApplicationRecord
   end
 end
 
-class ResultLevel1 < Result
-  def calculate
-    Processor::Interfaces::Level1::Result.new(input, stage).calculate
+# TODO: separate files
+module Result
+  class Level1 < Result
+    def calculate
+      Processor::Interfaces::Level1::Result.new(input, stage).calculate
+    end
+
+    private
+
+    def input
+      Processor::Interfaces::Level1::Input.new.load
+    end
   end
 
-  private
+  class Level2 < Result
+    def calculate
+      Processor::Interfaces::Level2::Result.new(input, stage).calculate
+    end
 
-  def input
-    Processor::Interfaces::Level1::Input.new.load
-  end
-end
+    private
 
-class ResultLevel2 < Result
-  def calculate
-    Processor::Interfaces::Level2::Result.new(input, stage).calculate
-  end
-
-  private
-
-  def input
-    Processor::Interfaces::Level2::Input.new.load
+    def input
+      Processor::Interfaces::Level2::Input.new.load
+    end
   end
 end
