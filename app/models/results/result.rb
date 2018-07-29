@@ -1,17 +1,14 @@
 # frozen_string_literal: true
+module Results
+  class Result < ApplicationRecord
+    validates :stage, presence: true
+    validates :type, presence: true
 
-class Result < ApplicationRecord
-  validates :level, presence: true
-  validates :stage, presence: true
-  validates :type, presence: true
-
-  def calculate
-    raise NotImplementedError
+    def calculate
+      raise NotImplementedError
+    end
   end
-end
 
-# TODO: separate files
-module Result
   class Level1 < Result
     def calculate
       Processor::Interfaces::Level1::Result.new(input, stage).calculate
@@ -32,7 +29,7 @@ module Result
     private
 
     def input
-      Processor::Interfaces::Level2::Input.new.load
+      Processor::Interfaces::Leve12::Input.new.load
     end
   end
 end

@@ -6,7 +6,7 @@ module Processor
       class Input
         def load
           input_array = [[]]
-          inputs = ::Input.where(level: 2).order(:line)
+          inputs = Inputs::Input.where(type: "Inputs::Level2").order(:line)
           inputs.each do |input|
             input_array[input[:line]] = [] unless input_array[input[:line]]
             input_array[input[:line]].push(input[:input])

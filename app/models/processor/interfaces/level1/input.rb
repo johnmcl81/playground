@@ -5,7 +5,7 @@ module Processor
     module Level1
       class Input
         def load
-          ::Input.where(level: 1).order(:order).pluck(:input)
+          Inputs::Input.where(type: "Inputs::Level1").order(:order).pluck(:input)
         end
       end
     end
