@@ -10,7 +10,7 @@ class InputTest < ActiveSupport::TestCase
   test "level 2 input is valid" do
     input_lines = File.open(File.join(Rails.root, 'app', 'data', 'level_2_input.txt')).readlines
     input_lines.each_with_index do |line, index|
-      assert_equal line, Input.where(type: "Inputs::Level1", line: index).pluck(:input).join("\t") + "\n"
+      assert_equal line, Input.where(type: "Inputs::Level2", line: index).pluck(:input).join("\t") + "\n"
     end
   end
 end

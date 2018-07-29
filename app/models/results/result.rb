@@ -29,7 +29,19 @@ module Results
     private
 
     def input
-      Processor::Interfaces::Leve12::Input.new.load
+      Processor::Interfaces::Level2::Input.new.load
+    end
+  end
+
+  class Level3 < Result
+    def calculate
+      Processor::Interfaces::Level3::Result.new(input, stage).calculate
+    end
+
+    private
+
+    def input
+      Processor::Interfaces::Level3::Input.new.load
     end
   end
 end

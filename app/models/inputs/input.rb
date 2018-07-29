@@ -2,7 +2,6 @@ module Inputs
   class Input < ApplicationRecord
     validates :order, presence: true
     validates :line, presence: true
-    validates :level, presence: true
     validates :type, presence: true
 
     def load
@@ -17,6 +16,12 @@ module Inputs
   end
 
   class Level2 < Input
+    def load
+      Processor::Interfaces::Level2::Input.load
+    end
+  end
+  
+  class Level3 < Input
     def load
       Processor::Interfaces::Level2::Input.load
     end
