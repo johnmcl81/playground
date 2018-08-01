@@ -11,6 +11,8 @@ module Processor
           @spiral = [@location[:position]]
         end
 
+        # TODO: change algorithm, you can detect when to turn by checking when the spiral increases in size and adding 1 to the size every 4 turns. Don't need to save the spiral every interation, only check the coords at the end.
+
         def calculate
           case stage
           when 1 then find_shortest_path
