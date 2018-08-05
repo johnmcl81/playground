@@ -20,10 +20,10 @@ module Inputs
       Processor::Interfaces::Level2::Input.load
     end
   end
-  
+
   class Level3 < Input
     def load
-      Processor::Interfaces::Level2::Input.load
+      Processor::Interfaces::Level3::Input.load
     end
   end
 end

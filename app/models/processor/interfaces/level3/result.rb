@@ -109,7 +109,10 @@ module Processor
         end
 
         def turn_blocked?
-          spiral.map{|s| s[:position]}.include?(next_coords(turn_change(location[:orientation])))
+          location[:orientation]
+            .yield_self { |orientation| turn_change(orientation) }
+            .yield_self { |turn_changes| next_coords(turn_changes) }
+            .yield_self { |next_coord| spiral.map{ |s| s[:position]}.include?(next_coord) }
         end
 
         def turn_change(key)
