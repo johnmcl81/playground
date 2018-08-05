@@ -8,35 +8,97 @@ module Processor
           @input = input
           @stage = stage
           @location = { step: 1, position: [0, 0], orientation: :east }
-          @spiral = [@location[:position]]
+          @spiral = [{position: @location[:position], value: 1}]
+          @state = {square: 1, leg: 0, x: 0, y: 0, leg_size: 1}
+          @input_found = false
         end
 
         def calculate
           case stage
-          when 1 then find_shortest_path
+            when 1 then find_shortest_path
+            when 2 then build_spiral
           end
         end
 
         private
 
         def find_shortest_path
-          build_spiral
-          coords(:x).abs + coords(:y).abs
+          loop do
+            if input_found?
+              return state[:x].abs + state[:y].abs
+            else
+              if state[:leg] == 4
+                state[:leg] = 0
+              else
+                state[:leg] += 1
+              end
+            end
+            case state[:leg]
+              when 1
+                set_state(:x, 1)
+              when 2
+                set_state(:y, 1)
+              when 3
+                set_state(:x, -1)
+              when 4
+                set_state(:y, -1)
+            end
+          end
+        end
+
+        def set_state(coord, sign)
+          state[:square] += state[:leg_size]
+          state[coord] += state[:leg_size] * sign
+          state[:leg_size] += 1 if state[:leg].even?
+        end
+
+        def input_found?
+          if state[:square] >= input
+            leg_offset = state[:square] - input
+            case state[:leg]
+              when 1
+                state[:x] = state[:x] - leg_offset
+              when 2
+                state[:y] = state[:y] - leg_offset
+              when 3
+                state[:x] = state[:x] + leg_offset
+              when 4
+                state[:y] = state[:y] + leg_offset
+              end
+            true
+          end
         end
 
         def build_spiral
           loop do
             break unless location[:step] < input
             step
-            location[:step] += 1
-            puts location[:step]
           end
           location[:step]
         end
 
+        def sum_neighbours
+          sum = 0
+          n = []
+          n[0] = [coords(:x) - 1, coords(:y)]
+          n[1] = [coords(:x) - 1, coords(:y) + 1]
+          n[2] = [coords(:x),     coords(:y) + 1]
+          n[3] = [coords(:x) + 1, coords(:y) + 1]
+          n[4] = [coords(:x) + 1, coords(:y)]
+          n[5] = [coords(:x) + 1, coords(:y) - 1]
+          n[6] = [coords(:x), coords(:y) - 1]
+          n[7] = [coords(:x) - 1, coords(:y) - 1]
+          n.each do |c|
+            neighbour = spiral.find { |s| s[:position] == c }
+            sum += neighbour[:value] if neighbour
+          end
+          sum
+        end
+
         def step
           location[:position] = next_coords(location[:orientation])
-          spiral << location[:position]
+          location[:step] = sum_neighbours
+          spiral << {position: location[:position], value: location[:step]}
           unless turn_blocked?
             turn
           end
@@ -47,7 +109,7 @@ module Processor
         end
 
         def turn_blocked?
-          spiral.include?(next_coords(turn_change(location[:orientation])))
+          spiral.map{|s| s[:position]}.include?(next_coords(turn_change(location[:orientation])))
         end
 
         def turn_change(key)
@@ -89,7 +151,7 @@ module Processor
           end
         end
 
-        attr_reader :input, :stage, :location, :spiral
+        attr_reader :input, :stage, :location, :spiral, :state, :input_found
       end
     end
   end

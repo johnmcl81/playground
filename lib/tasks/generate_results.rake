@@ -25,5 +25,10 @@ namespace :generate do
       .first_or_create! do |result|
     result.update(result: result.calculate)
     end
+
+    Results::Result.where(stage: 2, type: 'Results::Level3')
+      .first_or_create! do |result|
+    result.update(result: result.calculate)
+    end
   end
 end
